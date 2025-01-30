@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ecommerce-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecommercedb?useSSL=false
+    username: ecommerce
+    password: ecommerce
+    hikari:
+      initialization-fail-timeout: 0
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update

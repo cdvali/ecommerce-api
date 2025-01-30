@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ecommercedb
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_USER: ecommerce
+      MYSQL_PASSWORD: ecommerce
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
