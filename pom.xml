@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.vtech</groupId>
 	<artifactId>ecommerce-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>ecommerce-api</name>
 	<description>E-Commerce Api</description>
 	<url/>
@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.6.3</org.mapstruct.version>
+		<aws.spring.version>3.3.0</aws.spring.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -47,11 +48,30 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+		<dependency>
+	   		<groupId>io.awspring.cloud</groupId>
+		    <artifactId>spring-cloud-aws-starter</artifactId>
+		    <version>${aws.spring.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.awspring.cloud</groupId>
+		    <artifactId>spring-cloud-aws-starter-secrets-manager</artifactId>
+		    <version>${aws.spring.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -109,6 +129,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ecommerce-api</finalName>
 	</build>
 
 </project>
