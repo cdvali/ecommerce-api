@@ -32,3 +32,6 @@ management:
 logging:
   level:
     io.awspring.cloud.secretsmanager: DEBUG
+
+app:
+  version: 0.0.5
