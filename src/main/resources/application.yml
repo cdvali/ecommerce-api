@@ -29,6 +29,13 @@ management:
     health:
       show-details: always
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method			
+
 logging:
   level:
     io.awspring.cloud.secretsmanager: DEBUG
