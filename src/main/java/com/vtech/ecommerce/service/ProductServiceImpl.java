@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vtech.ecommerce.audit.service.AuditLogService;
 import com.vtech.ecommerce.dto.ProductDTO;
 import com.vtech.ecommerce.exception.ResourceNotFoundException;
 import com.vtech.ecommerce.mapper.ProductMapper;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository productRepository;
 	private final ProductMapper productMapper;
+	private final AuditLogService auditLogService;
 
 	@Override
 	public Iterable<ProductDTO> getAllProducts() {
@@ -36,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO create(ProductDTO productDTO) {
 		Product product = productMapper.toEntity(productDTO);
 		Product savedProduct = productRepository.save(product);
+		
+		auditLogService.logAction("insert", "product", savedProduct.toString());
+		
 		return productMapper.toDTO(savedProduct);
 	}
 
@@ -45,16 +50,22 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 		product.setName(productDTO.getName());
 		product.setPrice(productDTO.getPrice());
-		productRepository.save(product);
+		Product savedProduct = productRepository.save(product);
+		
+		auditLogService.logAction("update", "product", savedProduct.toString());
 	}
 
 	@Override
 	public void deleteAll() {
 		productRepository.deleteAll();
+		
+		auditLogService.logAction("delete", "product", "all");
 	}
 	
 	@Override
 	public void deleteById(Long id) {
 		productRepository.deleteById(id);
+		
+		auditLogService.logAction("delete", "product", id.toString());
 	}
 }

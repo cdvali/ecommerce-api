@@ -2,17 +2,27 @@ spring:
   application:
     name: ecommerce-api
   datasource:
-    url: jdbc:mysql://${db.host}:${db.port}/${db.dbInstanceIdentifier}
-    username: ${db.username}
-    password: ${db.password}
-    driver-class-name: com.mysql.cj.jdbc.Driver		
+    ecommerce:
+      jdbcUrl: jdbc:mysql://localhost:3306/ecommerce
+      username: ecommerce
+      password: ecommerce
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        maximum-pool-size: 10
+        pool-name: EcommercePool
+    audit:
+      jdbcUrl: jdbc:mysql://localhost:3306/ecommerce_audit
+      username: ecommerce
+      password: ecommerce
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        maximum-pool-size: 10
+        pool-name: EcommerceAuditPool			
   jpa:
     generate-ddl: true
     show-sql: true
     hibernate:
       ddl-auto: update
-  config:
-    import: aws-secretsmanager:dev/ecommercedb?prefix=db.
 
 aws:
   region: us-east-1	
@@ -39,6 +49,9 @@ springdoc:
 logging:
   level:
     io.awspring.cloud.secretsmanager: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG
+    org.springframework.web.filter: DEBUG
+    org.springframework.boot.web.servlet.FilterRegistrationBean: DEBUG
 
 app:
   version: 0.0.5

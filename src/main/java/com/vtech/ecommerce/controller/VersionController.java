@@ -1,4 +1,4 @@
-package com.vtech.ecommerce.config;
+package com.vtech.ecommerce.controller;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/admin")
 public class VersionController {
 
     @Value("${app.version:unknown}")  // Default to "unknown" if not set

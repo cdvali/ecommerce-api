@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vtech.ecommerce.audit.service.AuditLogService;
 import com.vtech.ecommerce.dto.OrderDTO;
 import com.vtech.ecommerce.dto.OrderProductDTO;
 import com.vtech.ecommerce.exception.ResourceNotFoundException;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderMapper orderMapper;
 	private final OrderProductRepository orderProductRepository;
 	private final ProductRepository productRepository;
+	private final AuditLogService auditLogService;
 
 	@Override
 	public Iterable<OrderDTO> getAllOrders() {
@@ -59,6 +61,8 @@ public class OrderServiceImpl implements OrderService {
 
 		savedOrder.setOrderProducts(orderProducts);
 		savedOrder = orderRepository.save(savedOrder);
+		
+		auditLogService.logAction("update", "order", savedOrder.toString());
 
 		return orderMapper.toDTO(savedOrder);
 	}
@@ -82,12 +86,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		savedOrder.setOrderProducts(orderProducts);
-		orderRepository.save(savedOrder);
+		Order updatedOrder = orderRepository.save(savedOrder);
+		
+		auditLogService.logAction("update", "order", updatedOrder.toString());
 	}
 	
 	@Override
 	public void deleteById(Long id) {
 		orderProductRepository.deleteByPkOrderId(id);
 		orderRepository.deleteById(id);
+		
+		auditLogService.logAction("delete", "order", id.toString());
 	}
 }
