@@ -1,7 +1,7 @@
 package com.vtech.ecommerce.service;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +34,9 @@ public class S3Service {
 		return "s3://" + bucketName + "/" + key;
 	}
 
-	public InputStream downloadFile(String key) {
+	public InputStream downloadFile(String path) {
+		String key = URI.create(path).getPath().substring(1);
+		
 		GetObjectRequest getRequest = GetObjectRequest.builder().bucket(bucketName).key(key).build();
 
 		return s3Client.getObject(getRequest, ResponseTransformer.toInputStream());

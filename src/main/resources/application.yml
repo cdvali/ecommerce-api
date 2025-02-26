@@ -43,4 +43,4 @@ logging:
     io.awspring.cloud.secretsmanager: DEBUG
 
 app:
-  version: 0.0.5
+  version: 0.0.6
