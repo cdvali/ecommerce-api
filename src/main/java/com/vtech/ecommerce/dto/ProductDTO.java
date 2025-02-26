@@ -17,6 +17,7 @@ public class ProductDTO {
     private Long id;
     private String name;
     private Double price;
+    private String photoPath;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;

@@ -1,4 +1,4 @@
-package com.vtech.ecommerce.config;
+package com.vtech.ecommerce.controller;
 
 import java.util.Map;
 

@@ -33,6 +33,8 @@ public class Product extends Auditable {
     @Setter(AccessLevel.NONE)
     private Integer version;
     
+    private String photoPath;
+    
     public Product(String name, Double price) {
         this.name = name;
         this.price = price;

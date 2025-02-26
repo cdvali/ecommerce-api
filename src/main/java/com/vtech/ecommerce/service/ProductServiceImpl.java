@@ -1,5 +1,6 @@
 package com.vtech.ecommerce.service;
 
+import java.io.InputStream;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository productRepository;
 	private final ProductMapper productMapper;
+	private final S3Service s3Service;
 
 	@Override
 	public Iterable<ProductDTO> getAllProducts() {
@@ -52,9 +54,36 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteAll() {
 		productRepository.deleteAll();
 	}
-	
+
 	@Override
 	public void deleteById(Long id) {
 		productRepository.deleteById(id);
+	}
+
+	@Override
+	public ProductDTO uploadPhoto(Long productId, String fileName, InputStream fileStream, long fileSize) {
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+		String photoPath = s3Service.uploadFile(fileName, fileStream, fileSize);
+
+		product.setPhotoPath(photoPath);
+
+		Product savedProduct = productRepository.save(product);
+		return productMapper.toDTO(savedProduct);
+	}
+
+	@Override
+	public InputStream downloadPhoto(Long productId) {
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+		String photoPath = product.getPhotoPath();
+
+		if (photoPath == null || photoPath.isEmpty()) {
+			throw new ResourceNotFoundException("Product photo not available");
+		}
+
+		return s3Service.downloadFile(photoPath);
 	}
 }

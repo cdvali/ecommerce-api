@@ -15,7 +15,9 @@ spring:
     import: aws-secretsmanager:dev/ecommercedb?prefix=db.
 
 aws:
-  region: us-east-1	
+  region: us-east-1
+  s3:
+    bucket-name: ecommerce-east1
 
 server:
   port: 8080
