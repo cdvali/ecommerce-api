@@ -41,6 +41,7 @@ springdoc:
 logging:
   level:
     io.awspring.cloud.secretsmanager: DEBUG
+    org.springframework.security: DEBUG
 
 app:
   version: 0.0.7
