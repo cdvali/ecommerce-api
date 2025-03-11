@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class VersionController {
 
-    @Value("${app.version:unknown}")  // Default to "unknown" if not set
+    @Value("${app.version:unknown}")
     private String appVersion;
 
     @GetMapping("/version")
