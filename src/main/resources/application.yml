@@ -2,17 +2,23 @@ spring:
   application:
     name: ecommerce-api
   datasource:
-    url: jdbc:mysql://${db.host}:${db.port}/${db.dbInstanceIdentifier}
-    username: ${db.username}
-    password: ${db.password}
-    driver-class-name: com.mysql.cj.jdbc.Driver		
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecommercedb
+    username: ecommerce
+    password: ecommerce
   jpa:
     generate-ddl: true
     show-sql: true
-    hibernate:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect				
+    hibernate:     
       ddl-auto: update
-  config:
-    import: aws-secretsmanager:dev/ecommercedb?prefix=db.
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/ecommerce
 
 aws:
   region: us-east-1
@@ -41,6 +47,7 @@ springdoc:
 logging:
   level:
     io.awspring.cloud.secretsmanager: DEBUG
+    org.springframework.security: DEBUG
 
 app:
   version: 0.0.7
